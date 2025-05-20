@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<robot name="hovermower" xmlns:xacro="http://ros.org/wiki/xacro">
+
+
+
+    <material name="gray">
+      <color rgba="0.5 0.5 0.5 1"/>
+    </material>
+    <material name="light_gray">
+      <color rgba="0.7 0.7 0.7 1"/>
+    </material>
+    <material name="dark_gray">
+      <color rgba="0.3 0.3 0.3 1"/>
+    </material>
+    <material name="black">
+      <color rgba="0 0 0 1"/>
+    </material>
+    <material name="red">
+      <color rgba="1 0 0 1"/>
+    </material>
+    <material name="green">
+      <color rgba="0 1 0 1"/>
+    </material>
+    <material name="blue">
+      <color rgba="0 0 1 1"/>
+    </material>
+    <material name="yellow">
+      <color rgba="1 1 0 1"/>
+    </material>
+    <material name="white">
+      <color rgba="1 1 1 1"/>
+    </material>
+    
+
+  <!-- Base Link -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.6 0.4 0.1"/> <!-- hoverboard dimensions -->
+      </geometry>
+      <origin xyz="0 0 0.05"/>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <!-- Half-Circle Front -->
+  <link name="front_arc">
+    <visual>
+      <geometry>
+        <cylinder radius="0.3" length="0.02"/>
+      </geometry>
+      <origin xyz="0.3 0 0.05" rpy="1.5708 0 0"/> <!-- 90 deg pitch -->
+      <material name="light_gray"/>
+    </visual>
+  </link>
+  <joint name="front_arc_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_arc"/>
+    <origin xyz="0.3 0 0"/>
+  </joint>
+
+  <!-- Left Wheel -->
+  <link name="left_wheel">
+    <visual>
+      <geometry>
+        <cylinder radius="0.06" length="0.03"/>
+      </geometry>
+      <origin xyz="0 0.2 0.03" rpy="0 1.5708 0"/>
+      <material name="black"/>
+    </visual>
+  </link>
+  <joint name="left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_wheel"/>
+    <origin xyz="0 0.2 0.03"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- Right Wheel -->
+  <link name="right_wheel">
+    <visual>
+      <geometry>
+        <cylinder radius="0.06" length="0.03"/>
+      </geometry>
+      <origin xyz="0 -0.2 0.03" rpy="0 1.5708 0"/>
+      <material name="black"/>
+    </visual>
+  </link>
+  <joint name="right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_wheel"/>
+    <origin xyz="0 -0.2 0.03"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- Front Caster Left -->
+  <link name="caster_left">
+    <visual>
+      <geometry>
+        <sphere radius="0.03"/>
+      </geometry>
+      <origin xyz="0.4 0.1 0.03"/>
+      <material name="dark_gray"/>
+    </visual>
+  </link>
+  <joint name="caster_left_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="caster_left"/>
+    <origin xyz="0.4 0.1 0.03"/>
+  </joint>
+
+  <!-- Front Caster Right -->
+  <link name="caster_right">
+    <visual>
+      <geometry>
+        <sphere radius="0.03"/>
+      </geometry>
+      <origin xyz="0.4 -0.1 0.03"/>
+      <material name="dark_gray"/>
+    </visual>
+  </link>
+  <joint name="caster_right_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="caster_right"/>
+    <origin xyz="0.4 -0.1 0.03"/>
+  </joint>
+
+  <!-- Blade Motor (Spinning Visual Only) -->
+  <link name="blade">
+    <visual>
+      <geometry>
+        <cylinder radius="0.2" length="0.02"/>
+      </geometry>
+      <origin xyz="0.3 0 0" rpy="1.5708 0 0"/>
+      <material name="red"/>
+    </visual>
+  </link>
+  <joint name="blade_joint" type="continuous">
+    <parent link="front_arc"/>
+    <child link="blade"/>
+    <origin xyz="0.3 0 -0.01"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+
+</robot>
